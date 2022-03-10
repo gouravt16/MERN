@@ -1,0 +1,2 @@
+# MERN
+Simple MERN App
