@@ -4,7 +4,7 @@ import HomepageContext from "../data/HomepageData";
 function Homepage() {
   const { users } = useContext(HomepageContext);
   const imageURL =
-    "https://raw.githubusercontent.com/gouravt16/MERN/main/client/public/images/";
+    "https://raw.githubusercontent.com/gouravt16/MERN/main/public/images/";
   return (
     <div className="Profile">
       {users &&
