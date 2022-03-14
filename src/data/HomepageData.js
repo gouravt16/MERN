@@ -12,7 +12,9 @@ export const HomepageData = ({ children }) => {
     { id: 3, name: "Rishu Yadav", contact: 9883979229 },
   ]);
   const welcome = async () => {
-    const response = await fetch(`http://localhost:8080/users`);
+    const response = await fetch(
+      `https://gourav-node-server.herokuapp.com/users`
+    );
     const data = await response.json();
     setUsers(data);
   };
