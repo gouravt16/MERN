@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import "./App.css";
 import Homepage from "./components/Homepage";
 import { HomepageData } from "./data/HomepageData";
