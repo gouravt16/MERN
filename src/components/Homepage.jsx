@@ -13,11 +13,8 @@ function Homepage() {
           return (
             <div className="User">
               {user.name}
-              <img
-                width={200}
-                src={imageURL + user.image + ".jpg"}
-                alt="Yaha Photo Hona Chahiye tha"
-              />
+              <img width={150} src={imageURL + user.image + ".jpg"} alt="" />
+              <br></br>
               {user.currentOrganization}
               <br></br>
               {user.contact}
