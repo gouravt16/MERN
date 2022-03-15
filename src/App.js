@@ -1,17 +1,18 @@
 import "./App.css";
 import Homepage from "./components/Homepage";
+import UserProfile from "./components/UserProfile";
 import { HomepageData } from "./data/HomepageData";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
   return (
     <HomepageData>
-      <div className="App">
-        <header className="App-header">
-          <h1>
-            <Homepage />
-          </h1>
-        </header>
-      </div>
+      <Router>
+        <Routes>
+          <Route exact path="/" element={<Homepage />}></Route>
+          <Route exact path="/user/:id" element={<UserProfile />}></Route>
+        </Routes>
+      </Router>
     </HomepageData>
   );
 }

@@ -36,6 +36,9 @@
   text-align: center;
   line-height: 75px;
   font-size: 30px;
+  background-color: #1d7e7e;
+  border-radius: 12px;
+  color: white;
 }
 
 @keyframes App-logo-spin {
