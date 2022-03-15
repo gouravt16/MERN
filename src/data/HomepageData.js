@@ -3,23 +3,31 @@ import { useState, useEffect, createContext } from "react";
 const HomepageContext = createContext();
 
 export const HomepageData = ({ children }) => {
+  const [users, setUsers] = useState([]);
+  const [userData, setUserData] = useState({});
+
   useEffect(() => {
-    welcome();
+    FetchAllData();
   }, []);
 
-  const [users, setUsers] = useState([
-    { id: 2, name: "Rakesh Yadav", contact: 9883962164 },
-    { id: 3, name: "Rishu Yadav", contact: 9883979229 },
-  ]);
-  const welcome = async () => {
+  const FetchAllData = async () => {
     const response = await fetch(
       `https://gourav-node-server.herokuapp.com/users`
     );
     const data = await response.json();
     setUsers(data);
   };
+
+  const FetchUserData = async (_id) => {
+    const response = await fetch(
+      `https://gourav-node-server.herokuapp.com/user/${_id}`
+    );
+    const data = await response.json();
+    setUserData(data);
+  };
+
   return (
-    <HomepageContext.Provider value={{ users, welcome }}>
+    <HomepageContext.Provider value={{ users, userData, FetchUserData }}>
       {children}
     </HomepageContext.Provider>
   );
