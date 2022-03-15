@@ -10,15 +10,16 @@ function Homepage() {
       {users &&
         users.length > 0 &&
         users.map((user) => {
+          const url = `/user/${user._id}`;
           return (
-            <div className="User">
-              {user.name}
-              <img width={150} src={imageURL + user.image + ".jpg"} alt="" />
-              <br></br>
-              {user.currentOrganization}
-              <br></br>
-              {user.contact}
-            </div>
+            <a href={url} key={user._id} style={{ textDecoration: "none" }}>
+              <div className="User">
+                {user.name}
+                <img width={150} src={imageURL + user.image + ".jpg"} alt="" />
+                <br></br>
+                {user.currentOrganization}
+              </div>
+            </a>
           );
         })}
     </div>
