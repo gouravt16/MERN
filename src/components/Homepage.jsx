@@ -16,8 +16,6 @@ function Homepage() {
               <div className="User">
                 {user.name}
                 <img width={150} src={imageURL + user.image + ".jpg"} alt="" />
-                <br></br>
-                {user.currentOrganization}
               </div>
             </a>
           );
