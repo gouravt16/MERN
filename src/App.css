@@ -40,6 +40,27 @@
   border-radius: 12px;
   color: white;
 }
+.Container {
+  display: flex;
+  margin: 40px;
+  background-color: #1d7e7e;
+  border-radius: 4px;
+}
+.Product {
+  margin: 20px;
+  flex-flow: column;
+}
+.Description {
+  width: 50%;
+  margin: 20px;
+  padding: 50px;
+  flex-flow: column;
+}
+.title {
+  margin: 20px;
+  padding: 50px;
+  width: 15%;
+}
 
 @keyframes App-logo-spin {
   from {
