@@ -3,6 +3,8 @@ import HomepageContext from "../data/HomepageData";
 import { useParams } from "react-router-dom";
 import { Form, Modal, Button } from "react-bootstrap";
 
+const proxy = "https://gourav-node-server.herokuapp.com"; //http://localhost:8080
+
 const UserModal = ({ user, closeModal }) => {
   const { FetchUserData } = useContext(HomepageContext);
   const [name, setName] = useState(user.name ? user.name : "");
@@ -36,10 +38,7 @@ const UserModal = ({ user, closeModal }) => {
         linkedinURL,
       }),
     };
-    await fetch(
-      `https://gourav-node-server.herokuapp.com/user/${user._id}`,
-      requestOptions
-    );
+    await fetch(`${proxy}/user/${user._id}`, requestOptions);
     await FetchUserData(user._id);
     // const data = await response.json();
     closeModal();
