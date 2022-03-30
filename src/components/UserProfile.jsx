@@ -159,10 +159,13 @@ function UserProfile() {
                 <div className="Description">Details</div>
               </div>
             )}
-            {(user.skills || user.achievement) && (
+            {((user.skills && user.skills.length > 0) ||
+              (user.achievement && user.achievement.length > 0)) && (
               <div className="Container">
-                {user.skills && <div className="Product">Skills</div>}
-                {user.achievement && (
+                {user.skills && user.skills.length > 0 && (
+                  <div className="Product">Skills</div>
+                )}
+                {user.achievement && user.achievement.length > 0 && (
                   <div className="Description">Achievements</div>
                 )}
               </div>
