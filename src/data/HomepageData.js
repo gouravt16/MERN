@@ -1,5 +1,6 @@
 import { useState, useEffect, createContext } from "react";
 
+const proxy = `https://gourav-node-server.herokuapp.com`;
 const HomepageContext = createContext();
 
 export const HomepageData = ({ children }) => {
@@ -11,13 +12,13 @@ export const HomepageData = ({ children }) => {
   }, []);
 
   const FetchAllData = async () => {
-    const response = await fetch(`/users`);
+    const response = await fetch(`${proxy}/users`);
     const data = await response.json();
     setUsers(data);
   };
 
   const FetchUserData = async (_id) => {
-    const response = await fetch(`/user/${_id}`);
+    const response = await fetch(`${proxy}/user/${_id}`);
     const data = await response.json();
     setUserData(data);
   };
