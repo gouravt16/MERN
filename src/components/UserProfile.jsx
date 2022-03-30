@@ -3,8 +3,6 @@ import HomepageContext from "../data/HomepageData";
 import { useParams } from "react-router-dom";
 import { Form, Modal, Button } from "react-bootstrap";
 
-const proxy = "https://gourav-node-server.herokuapp.com"; //http://localhost:8080
-
 const UserModal = ({ user, closeModal }) => {
   const { FetchUserData } = useContext(HomepageContext);
   const [name, setName] = useState(user.name ? user.name : "");
@@ -38,7 +36,7 @@ const UserModal = ({ user, closeModal }) => {
         linkedinURL,
       }),
     };
-    await fetch(`${proxy}/user/${user._id}`, requestOptions);
+    await fetch(`/user/${user._id}`, requestOptions);
     await FetchUserData(user._id);
     // const data = await response.json();
     closeModal();
@@ -135,10 +133,20 @@ function UserProfile() {
                   {user.currentOrganization &&
                     "Software Engineer | " + user.currentOrganization}
                 </h3>
-                <p>{user.email && "Email Id: " + user.email}</p>
+                <p>{user.email && "Email: " + user.email}</p>
                 <p>{user.contact && "Contact: +91 " + user.contact}</p>
                 <p>{user.location && "Location: " + user.location}</p>
-                <p>{user.linkedinURL && "LinkedIn: " + user.linkedinURL}</p>
+                <p>
+                  {user.linkedinURL && "LinkedIn: "}{" "}
+                  <a
+                    href={user.linkedinURL}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    className="stringURL"
+                  >
+                    {user.linkedinURL}
+                  </a>
+                </p>
               </div>
               <div>
                 <Button onClick={openModal}>Edit</Button>
