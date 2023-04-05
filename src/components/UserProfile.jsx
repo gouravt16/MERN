@@ -3,10 +3,12 @@ import HomepageContext from "../data/HomepageData";
 import { useParams } from "react-router-dom";
 import { Form, Modal, Button } from "react-bootstrap";
 
-const proxy = `https://gourav-node-server.herokuapp.com`;
+// const proxy = `https://gourav-node-server.herokuapp.com`;
+const proxy = `http://localhost:8080`;
 
 const UserModal = ({ user, closeModal }) => {
   const { FetchUserData } = useContext(HomepageContext);
+  const [selectedImage, setSelectedImage] = useState();
   const [name, setName] = useState(user.name ? user.name : "");
   const [currentOrganization, setCurrentOrganization] = useState(
     user.currentOrganization ? user.currentOrganization : ""
@@ -17,6 +19,7 @@ const UserModal = ({ user, closeModal }) => {
   const [linkedinURL, setLinkedinURL] = useState(
     user.linkedinURL ? user.linkedinURL : ""
   );
+  const handleImageChange = (e) => setSelectedImage(e.target.files[0]);
   const handleNameChange = (e) => setName(e.target.value);
   const handleCurrentOrganizationChange = (e) =>
     setCurrentOrganization(e.target.value);
@@ -26,7 +29,7 @@ const UserModal = ({ user, closeModal }) => {
   const handleLinkedinURLChange = (e) => setLinkedinURL(e.target.value);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const requestOptions = {
+    await fetch(`${proxy}/user/${user._id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -37,8 +40,16 @@ const UserModal = ({ user, closeModal }) => {
         location,
         linkedinURL,
       }),
-    };
-    await fetch(`${proxy}/user/${user._id}`, requestOptions);
+    });
+
+    const formData = new FormData();
+    formData.append("uploaded_file", selectedImage);
+    await fetch(`${proxy}/user/upload`, {
+      method: "POST",
+      headers: { enctype: "multipart/form-data" },
+      body: formData,
+    });
+
     await FetchUserData(user._id);
     // const data = await response.json();
     closeModal();
@@ -71,6 +82,15 @@ const UserModal = ({ user, closeModal }) => {
           placeholder="Enter email"
           value={email}
           onChange={handleEmailChange}
+        />
+      </Form.Group>
+      <Form.Group controlId="formBasicEmail">
+        <Form.Label>Profile Image</Form.Label>
+        <Form.Control
+          type="file"
+          className="form-control-file"
+          name="uploaded_file"
+          onChange={handleImageChange}
         />
       </Form.Group>
 
@@ -188,5 +208,3 @@ function UserProfile() {
 
 export default UserProfile;
 
-// How to import this modal
-// How to generalize this
