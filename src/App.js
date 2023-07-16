@@ -5,12 +5,11 @@ import Register from "./components/Register";
 import UserProfile from "./components/UserProfile";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import { HomepageData } from "./data/HomepageData";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
   return (
-    <HomepageData>
+    <>
       <Header />
       <Router>
         <Routes>
@@ -21,7 +20,7 @@ function App() {
         </Routes>
       </Router>
       <Footer />
-    </HomepageData>
+    </>
   );
 }
 

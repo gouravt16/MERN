@@ -1,25 +1,32 @@
-import React, { useContext } from "react";
-import HomepageContext from "../data/HomepageData";
+import React, { useState, useEffect } from "react";
+import { FetchAllData } from "../data/HomepageData";
+import Logout from "./Logout";
 
 function Homepage() {
-  const { users } = useContext(HomepageContext);
-  const imageURL =
-    "https://raw.githubusercontent.com/gouravt16/MERN/main/public/images/";
+  const imageURL = require.context('../../public/images', true);
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    FetchAllData().then((users) => {
+      setUsers(users);
+      setLoading(false);
+    });
+  }, []);
   return (
     <div>
-      {users && users.length > 0 ? (
+      {loading ? (
+        <h5 style={{ textAlign: "center" }}>Loading...</h5>
+      ) : (users && users.length > 0) ? (
         <div className="Profile" style={{ marginTop: "40px" }}>
+          <Logout/>
           {users.map((user) => {
             const url = `/user/${user._id}`;
+            const userImage = imageURL(`./${user.image}`)
             return (
               <a href={url} key={user._id} style={{ textDecoration: "none" }}>
                 <div className="User">
+                  <img width={150} src={userImage} alt="" />
                   {user.name}
-                  <img
-                    width={150}
-                    src={imageURL + user.image + ".jpg"}
-                    alt=""
-                  />
                 </div>
               </a>
             );

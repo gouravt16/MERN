@@ -1,13 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
-import HomepageContext from "../data/HomepageData";
+import React, { useEffect, useState } from "react";
+import {FetchUserData} from "../data/HomepageData";
 import { useParams } from "react-router-dom";
 import { Form, Modal, Button } from "react-bootstrap";
+import Logout from "./Logout";
 
 // const proxy = `https://gourav-node-server.herokuapp.com`;
 const proxy = `http://localhost:8080`;
 
 const UserModal = ({ user, closeModal }) => {
-  const { FetchUserData } = useContext(HomepageContext);
   const [selectedImage, setSelectedImage] = useState();
   const [name, setName] = useState(user.name ? user.name : "");
   const [currentOrganization, setCurrentOrganization] = useState(
@@ -29,9 +29,10 @@ const UserModal = ({ user, closeModal }) => {
   const handleLinkedinURLChange = (e) => setLinkedinURL(e.target.value);
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const tokenString = sessionStorage.getItem("token");
     await fetch(`${proxy}/user/${user._id}`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", authorization: `Bearer ${JSON.parse(tokenString)}` },
       body: JSON.stringify({
         name,
         currentOrganization,
@@ -46,12 +47,11 @@ const UserModal = ({ user, closeModal }) => {
     formData.append("uploaded_file", selectedImage);
     await fetch(`${proxy}/user/upload`, {
       method: "POST",
-      headers: { enctype: "multipart/form-data" },
+      headers: { enctype: "multipart/form-data", authorization: `Bearer ${JSON.parse(tokenString)}` },
       body: formData,
     });
 
     await FetchUserData(user._id);
-    // const data = await response.json();
     closeModal();
   };
   return (
@@ -129,26 +129,28 @@ const UserModal = ({ user, closeModal }) => {
 };
 
 function UserProfile() {
-  const { userData, FetchUserData } = useContext(HomepageContext);
+  const [userData,setUserData] = useState({});
+  useEffect(()=> {
+    FetchUserData(id).then(userData=> {
+      setUserData(userData);
+    })
+  },[])
   const [showModal, setModal] = useState(false);
   const { id } = useParams();
   const openModal = () => setModal(true);
   const closeModal = () => setModal(false);
-  useEffect(() => {
-    FetchUserData(id);
-  }, []);
-  const imageURL =
-    "https://raw.githubusercontent.com/gouravt16/MERN/main/public/images/";
+  const imageURL = "/images/";
   return (
     <div>
       {userData &&
         userData.length > 0 &&
         userData.map((user) => (
           <>
+            <Logout/>
             <div className="Container">
               <div className="Product">
                 <h2>{user.name}</h2>
-                <img width={300} src={imageURL + user.image + ".jpg"} alt="" />
+                <img width={300} src={imageURL + user.image} alt="" />
               </div>
               <div className="Description" key={user._id}>
                 <h3>

@@ -18,16 +18,16 @@ export default class LoginRegister extends Component {
     console.log(this.state.email, this.state.password);
     e.preventDefault();
     const res = await axios({
-      method: "get",
+      method: "post",
       url: `http://localhost:8080/login`,
       data: {
         email: this.state.email,
         password: this.state.password,
       },
     }).then((response) => {
+      sessionStorage.setItem('token', JSON.stringify(response.data.accessToken))
       this.setState({ isLoggedIn: true });
       console.log(response.data.message);
-      sessionStorage.setItem('token', JSON.stringify(response.data.accessToken))
     }).catch((err) => {
       console.error(err)
     })

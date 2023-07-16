@@ -32,6 +32,8 @@
   flex-wrap: nowrap;
 }
 .User {
+  display: flex;
+  flex-direction: column;
   margin: 20px;
   text-align: center;
   line-height: 75px;
@@ -83,6 +85,15 @@
   justify-content: space-between;
   border: 1px solid #39A2DB;
   border-radius: 2rem;
+}
+.logout {
+  position: absolute;
+  margin: 10px;
+  padding: 6px;
+  background-color: mediumaquamarine;
+  right:20px;
+  border: 1px solid black;
+  border-radius: 10px;
 }
 
 @keyframes App-logo-spin {
